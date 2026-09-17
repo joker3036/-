@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>조민우 - 보험 보장분석</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#003f7f',
+            'primary-dark': '#002849',
+            'primary-light': '#0052b3',
+            'accent': '#4a90e2',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- 헤더 -->
+  <header class="sticky top-0 z-50 bg-white shadow-sm">
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#home" class="text-xl font-bold text-primary">조민우</a>
+      <ul class="hidden md:flex gap-6 text-sm font-medium">
+        <li><a href="#home" class="hover:text-primary transition">홈</a></li>
+        <li><a href="#survey" class="hover:text-primary transition">보장분석 시작</a></li>
+        <li><a href="#contact" class="hover:text-primary transition">연락처</a></li>
+      </ul>
+      <button id="menuBtn" class="md:hidden text-primary text-2xl">☰</button>
+    </nav>
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+      <a href="#home" class="block px-4 py-2 hover:bg-gray-100">홈</a>
+      <a href="#survey" class="block px-4 py-2 hover:bg-gray-100">보장분석 시작</a>
+      <a href="#contact" class="block px-4 py-2 hover:bg-gray-100">연락처</a>
+    </div>
+  </header>
+
+  <!-- 히어로 섹션 (자기소개) -->
+  <section id="home" class="bg-gradient-to-b from-primary to-primary-dark text-white py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">조민우</h1>
+      <p class="text-lg md:text-xl mb-8 opacity-90">한 가지 보험사만 취급하는 것이 아닌<br>모든 보험사를 비교·분석해드립니다</p>
+
+      <!-- 프로필 이미지 Placeholder -->
+      <div class="w-40 h-40 bg-white opacity-20 rounded-full mx-auto mb-8 flex items-center justify-center">
+        <span class="text-white text-5xl">📸</span>
+      </div>
+
+      <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-8 max-w-2xl mx-auto">
+        <p class="text-lg mb-6 leading-relaxed">
+          지금 나에게 보장분석이 정말 필요할까요?<br>
+          <strong>5분 설문만으로 당신의 보험이 안전한지 확인해드릴게요.</strong>
+        </p>
+        <a href="#survey" class="inline-block bg-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition transform hover:scale-105">
+          🔍 보장분석 설문 시작하기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 설문 위저드 섹션 -->
+  <section id="survey" class="py-20 px-4 bg-gray-50">
+    <div class="max-w-2xl mx-auto">
+      <!-- 설문 진행 -->
+      <div id="surveyContainer" class="bg-white rounded-xl shadow-lg p-8">
+        <!-- 진행률 바 -->
+        <div class="mb-8">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-sm font-semibold text-gray-600" id="progressText">1/6</span>
+            <div class="text-right text-xs text-gray-400">설문 진행 중</div>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 16.67%"></div>
+          </div>
+        </div>
+
+        <!-- 질문들 -->
+        <div id="q1" class="survey-question active">
+          <h3 class="text-xl font-bold text-primary mb-6">Q1. 나는 사실 굳이 지금 보장분석을 받아야 하나 고민했다</h3>
+          <div class="space-y-3">
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="yes">그렇다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="no">아니다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="unsure">잘 모르겠다</button>
+          </div>
+        </div>
+
+        <div id="q2" class="survey-question">
+          <h3 class="text-xl font-bold text-primary mb-6">Q2. 현재 나의 월납 보험료는?</h3>
+          <div class="space-y-3">
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="10-20">10만원대</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="20-30">20만원대</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="30-40">30만원대</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="40-plus">40만원 이상</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="unknown">모름</button>
+          </div>
+        </div>
+
+        <div id="q3" class="survey-question">
+          <h3 class="text-xl font-bold text-primary mb-6">Q3. 나는 현재 나의 보험료 구성이 어떻게 되어있는지 안다<br><span class="text-sm font-normal text-gray-600">(예시: 실비 20% / 건강보험 30% / 저축보험 50%)</span></h3>
+          <div class="space-y-3">
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="well">정확히 안다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="partial">대략은 안다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="none">전혀 모른다</button>
+          </div>
+        </div>
+
+        <div id="q4" class="survey-question">
+          <h3 class="text-xl font-bold text-primary mb-6">Q4. 1년 이내 나의 보험을 관리받아 보험 청구 등을 진행해본 적이 있다</h3>
+          <div class="space-y-3">
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="yes">있다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="no">없다</button>
+          </div>
+        </div>
+
+        <div id="q5" class="survey-question">
+          <h3 class="text-xl font-bold text-primary mb-6">Q5. 가족/친척/친한 지인이 보험 관련 일을 하고 있다</h3>
+          <div class="space-y-3">
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="yes">있다</button>
+            <button class="survey-option w-full p-4 border-2 border-gray-300 rounded-lg text-left hover:border-primary hover:bg-blue-50 transition" data-answer="no">없다</button>
+          </div>
+        </div>
+
+        <!-- 정보입력 (Q6) -->
+        <div id="q6" class="survey-question">
+          <h3 class="text-xl font-bold text-primary mb-6">마지막으로 기본 정보를 알려주세요</h3>
+          <div class="space-y-4">
+            <input type="text" id="userName" placeholder="성함 (필수)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+            <input type="tel" id="userPhone" placeholder="연락처 (선택)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary">
+          </div>
+        </div>
+
+        <!-- 네비게이션 버튼 -->
+        <div class="flex justify-between mt-8">
+          <button id="prevBtn" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-400 transition" style="display: none;">이전</button>
+          <button id="nextBtn" class="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition ml-auto">다음</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 결과 화면 (처음엔 숨겨짐) -->
+  <section id="resultsSection" class="hidden py-20 px-4 bg-gradient-to-b from-primary-light to-primary">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-white rounded-xl shadow-2xl p-10">
+        <h2 class="text-3xl font-bold text-primary mb-6">당신의 보장분석 결과</h2>
+
+        <!-- 위험도 표시 -->
+        <div class="bg-blue-50 border-l-4 border-primary p-6 mb-8 rounded">
+          <p class="text-sm text-gray-600 mb-2">현재 보험 상태</p>
+          <p id="riskLevel" class="text-2xl font-bold text-primary">분석 중...</p>
+          <p id="riskDescription" class="text-gray-700 mt-2">설문 답변을 바탕으로 한 맞춤 진단입니다.</p>
+        </div>
+
+        <!-- 맞춤 코멘트 -->
+        <div class="mb-8">
+          <h3 class="text-lg font-bold text-primary mb-4">당신이 확인해야 할 부분</h3>
+          <div id="resultComments" class="space-y-3">
+            <!-- 결과가 동적으로 생성됨 -->
+          </div>
+        </div>
+
+        <!-- 유도 문구 -->
+        <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-lg mb-8">
+          <p class="text-gray-700">
+            이런 부분들은 <strong>무료 보장분석</strong>으로 정확히 확인해드립니다.
+            지금 바로 상담을 신청하세요!
+          </p>
+        </div>
+
+        <!-- CTA 버튼들 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button id="emailBtn" class="bg-accent hover:bg-blue-500 text-white font-bold py-4 px-6 rounded-lg transition">
+            📧 이메일로 상담 신청
+          </button>
+          <a href="#contact" class="bg-primary hover:bg-primary-dark text-white font-bold py-4 px-6 rounded-lg transition text-center">
+            📞 직접 연락하기
+          </a>
+        </div>
+
+        <!-- 다시 시작 버튼 -->
+        <button id="restartBtn" class="mt-6 w-full text-primary font-semibold py-3 border-2 border-primary rounded-lg hover:bg-blue-50 transition">
+          다시 설문하기
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 섹션 -->
+  <section id="contact" class="bg-primary text-white py-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-12">지금 바로 상담받으세요</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 전화 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-8 hover:bg-opacity-20 transition">
+          <div class="text-4xl mb-4">☎️</div>
+          <h3 class="text-xl font-bold mb-4">전화 상담</h3>
+          <!-- 샘플값 - 실제 전화번호로 교체 필요 -->
+          <a href="tel:010-0000-0000" class="text-lg hover:underline">010-0000-0000</a>
+        </div>
+
+        <!-- 카카오톡 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-8 hover:bg-opacity-20 transition">
+          <div class="text-4xl mb-4">💬</div>
+          <h3 class="text-xl font-bold mb-4">카카오톡 상담</h3>
+          <!-- 샘플값 - 실제 오픈채팅 링크로 교체 필요 -->
+          <a href="https://open.kakao.com/o/sample-link" target="_blank" class="text-lg hover:underline">오픈채팅 참여</a>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-8 hover:bg-opacity-20 transition">
+          <div class="text-4xl mb-4">✉️</div>
+          <h3 class="text-xl font-bold mb-4">이메일 문의</h3>
+          <!-- 샘플값 - 실제 이메일로 교체 필요 -->
+          <a href="mailto:example@example.com" class="text-lg hover:underline">example@example.com</a>
+        </div>
+      </div>
+
+      <p class="text-white opacity-80 mt-12">
+        응답 시간: 평일 09:00 ~ 18:00<br>
+        주말/공휴일도 상담 가능합니다
+      </p>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="bg-primary-dark text-white text-center py-8 px-4">
+    <p class="text-sm opacity-80">
+      © 2024 조민우 보험설계사 | 무료 보장분석 상담 전문
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
