@@ -27,7 +27,7 @@ if [ ! -f .venv/.installed ] || [ requirements.txt -nt .venv/.installed ]; then
   pip install -r requirements.txt && touch .venv/.installed
 fi
 
-if ! command -v claude >/dev/null 2>&1; then
+if ! command -v claude >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/claude" ]; then
   echo "참고: 'claude' 명령이 없어서 AI 분석은 아직 못 해요. README의 'Claude Code 설치' 단계를 따라 주세요."
 fi
 

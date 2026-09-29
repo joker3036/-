@@ -51,6 +51,18 @@ def test_run_structured_errors(tmp_path, payload, exc):
         llm.run_structured("p", {"type": "object"}, "sonnet", tmp_path, runner=fake_runner(payload))
 
 
+def test_claude_found_outside_path(tmp_path, monkeypatch):
+    fake = tmp_path / "claude"
+    fake.write_text("#!/bin/sh\n")
+    monkeypatch.setattr(llm.shutil, "which", lambda _name: None)
+    monkeypatch.setattr(llm, "_KNOWN_PATHS", (tmp_path / "missing", fake))
+    assert llm.claude_path() == str(fake)
+    monkeypatch.setattr(llm, "_KNOWN_PATHS", (tmp_path / "missing",))
+    assert llm.claude_path() is None
+    with pytest.raises(llm.LLMNotAvailable):
+        llm.run_structured("p", {"type": "object"}, "sonnet", tmp_path)
+
+
 def test_structured_output_falls_back_to_result_text():
     out = llm.parse_output(json.dumps({"type": "result", "subtype": "success", "is_error": False, "result": "{\"a\": 1}"}))
     assert out["data"] == {"a": 1}

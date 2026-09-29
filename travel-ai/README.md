@@ -17,34 +17,54 @@
 
 ```bash
 cd travel-ai
-DEMO=1 ./start.command
+DEMO=1 bash start.command
 ```
 가상 채널("샘플 ○○")로 모든 화면을 볼 수 있어요. 실제 데이터와는 따로 저장돼요.
 
 ## 2. 설치 (Mac)
 
-### ① Python 3.10 이상
-[python.org/downloads](https://www.python.org/downloads/)에서 macOS용 최신 버전을 설치하세요.
-터미널에서 `python3 --version`이 3.10 이상이면 OK.
+필요한 것: macOS 13 이상, Claude **Pro 또는 Max** 구독 (무료 플랜은 Claude Code를 쓸 수 없어요)
 
-### ② YouTube Data API 키 (무료)
+### ① 코드 받기
+[이 브랜치 ZIP 받기](https://github.com/joker3036/-/archive/refs/heads/claude/travel-youtube-ai-content-z73yyg.zip)를 눌러 내려받고 압축을 푸세요 (GitHub에 로그인한 브라우저에서).
+압축을 푼 폴더 안에 `travel-ai` 폴더가 있어요. 찾기 쉬운 곳(예: `문서`)으로 옮겨 두세요.
+
+### ② Python 3.10 이상
+[python.org/downloads](https://www.python.org/downloads/)에서 macOS용 최신 버전을 설치하세요.
+터미널(`응용 프로그램 → 유틸리티 → 터미널`)에서 `python3 --version`을 쳤을 때 3.10 이상이면 OK.
+
+### ③ YouTube Data API 키 (무료)
 1. [Google Cloud Console](https://console.cloud.google.com/)에 로그인 → 위쪽에서 **새 프로젝트** 만들기
 2. **API 및 서비스 → 라이브러리**에서 `YouTube Data API v3` 검색 → **사용**
 3. **API 및 서비스 → 사용자 인증 정보 → 사용자 인증 정보 만들기 → API 키**
 4. (권장) 만든 키의 **API 제한사항**을 `YouTube Data API v3`로 제한
-5. 키를 복사해서 대시보드 **설정** 페이지에 넣거나, `travel-ai/.env` 파일에 `YOUTUBE_API_KEY=키` 로 저장
+5. 키를 복사해 두세요. 대시보드를 연 뒤 **설정** 페이지에 붙여넣어요 (또는 `travel-ai/.env` 파일에 `YOUTUBE_API_KEY=키`)
 
-### ③ Claude Code 설치·로그인 (AI 분석용)
-[설치 안내](https://code.claude.com/docs/en/setup)대로 설치한 뒤 터미널에서 `claude`를 한 번 실행해 **Claude 계정(구독)으로 로그인**하세요.
-대시보드는 이 로그인을 그대로 써서 `claude -p` 명령으로 분석을 돌려요.
+### ④ Claude Code 설치·로그인 (AI 분석용)
+터미널에 아래를 붙여넣고 엔터:
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+끝나면 **새 터미널 창**을 열고 `claude`를 실행해서, 브라우저에 뜨는 안내대로 **Claude 계정(구독)으로 로그인**하세요. 로그인되면 `/exit`로 나오면 돼요.
+대시보드는 이 로그인을 그대로 써서 `claude -p` 명령으로 분석을 돌려요. ([공식 설치 안내](https://code.claude.com/docs/en/setup))
 
 > ⚠️ 이 방식은 **내 PC에서 내가 쓰는 용도**예요. 이 도구를 다른 사람에게 서비스로 제공하려면 Anthropic 정책상 API 키 방식으로 바꿔야 해요.
 
-### ④ 실행
-Finder에서 `travel-ai/start.command`를 **더블클릭**하세요.
-- 처음엔 "확인되지 않은 개발자" 경고가 뜰 수 있어요 → **우클릭 → 열기**
-- 처음 한 번은 패키지 설치로 1~2분 걸리고, 브라우저에 대시보드가 열려요
-- 터미널에서 하려면: `cd travel-ai && ./start.command`
+### ⑤ 실행
+터미널에서 `cd ` (cd 다음 한 칸 띄우기)를 입력하고, Finder의 `travel-ai` 폴더를 터미널 창으로 **끌어다 놓은 뒤** 엔터. 그다음:
+```bash
+bash start.command
+```
+- 처음 한 번은 패키지 설치로 1~2분 걸리고, 브라우저에 대시보드가 자동으로 열려요 (안 열리면 터미널에 나온 `http://localhost:8501` 주소를 여세요)
+- 끝낼 때는 터미널에서 `Control + C`
+- 다음부터는 같은 방법으로 `bash start.command`만 실행하면 돼요
+- `start.command`를 Finder에서 더블클릭해도 되지만, 인터넷에서 받은 파일이라 macOS가 막을 수 있어요. 그럴 땐 **시스템 설정 → 개인정보 보호 및 보안** 아래쪽의 **"그래도 열기"**를 누르세요
+
+### ⑥ 처음 할 일
+1. **⚙️ 설정** → YouTube API 키 붙여넣기 → **키 확인** → **설정 저장** → **Claude 연결 테스트**
+2. **🔎 채널 발굴 → URL·CSV 가져오기** → 롤모델 채널 주소를 붙여넣고 **⭐ 롤모델로 등록** 체크 → 가져오기
+3. **🔎 채널 발굴 → 키워드 탐색** → 키워드 10개로 탐색 실행 (여러 번 돌릴수록 채널이 쌓여요)
+4. **🔥 떡상 영상** → **돌파 영상 자동 선택** → **대기열 실행**으로 AI 분석
 
 ---
 
@@ -91,7 +111,7 @@ YouTube API에는 "구독자 1만 미만 여행 채널 검색" 기능이 없어�
 ## 6. 터미널 명령 (선택)
 
 ```bash
-cd travel-ai && source .venv/bin/activate
+cd travel-ai && source .venv/bin/activate   # start.command를 한 번 실행한 뒤
 python collect.py discover --keywords 20              # 키워드 탐색
 python collect.py discover --kinds stay explore       # 숙소 리뷰·이색 탐방 키워드만
 python collect.py import channels.csv --role-model    # URL 목록·CSV 가져오기

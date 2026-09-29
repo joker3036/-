@@ -37,8 +37,16 @@ class LLMResult:
     model: str
 
 
+# 설치 직후에는 PATH에 아직 안 잡혀 있을 수 있어서 기본 설치 위치도 찾아본다
+# (공식 설치 스크립트 → ~/.local/bin, Homebrew → /opt/homebrew/bin 또는 /usr/local/bin)
+_KNOWN_PATHS = (Path.home() / ".local" / "bin" / "claude", Path("/opt/homebrew/bin/claude"), Path("/usr/local/bin/claude"))
+
+
 def claude_path() -> str | None:
-    return shutil.which("claude")
+    found = shutil.which("claude")
+    if found:
+        return found
+    return next((str(p) for p in _KNOWN_PATHS if p.is_file()), None)
 
 
 def build_command(schema: dict, model: str, system_prompt: str | None = None, instruction: str | None = None) -> list[str]:
@@ -91,10 +99,13 @@ def parse_output(stdout: str, stderr: str = "") -> dict:
 def run_structured(prompt: str, schema: dict, model: str, work_dir: Path, system_prompt: str | None = None,
                    timeout: int = 600, runner=subprocess.run) -> LLMResult:
     """프롬프트를 표준 입력으로 넘기고 스키마에 맞는 JSON을 받는다."""
-    if runner is subprocess.run and claude_path() is None:
-        raise LLMNotAvailable("`claude` 명령을 찾을 수 없습니다. Claude Code를 설치하고 로그인하세요 (README 참고).")
-    work_dir.mkdir(parents=True, exist_ok=True)
     cmd = build_command(schema, model, system_prompt)
+    if runner is subprocess.run:
+        exe = claude_path()
+        if exe is None:
+            raise LLMNotAvailable("`claude` 명령을 찾을 수 없습니다. Claude Code를 설치하고 로그인하세요 (README 참고).")
+        cmd[0] = exe
+    work_dir.mkdir(parents=True, exist_ok=True)
     try:
         proc = runner(cmd, input=prompt, cwd=str(work_dir), capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired as exc:
