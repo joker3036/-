@@ -15,9 +15,10 @@ KEY_PAGE="https://console.cloud.google.com/apis/library/youtube.googleapis.com"
 
 step() { printf '\n\033[1m[%s/6] %s\033[0m\n' "$1" "$2"; }
 info() { printf '  %s\n' "$*"; }
+has_tty() { (exec < /dev/tty) 2>/dev/null; }
 ask() {  # 파이프로 실행돼도 키보드 입력을 받도록 /dev/tty에서 읽음
   local answer=""
-  if [ -r /dev/tty ]; then IFS= read -r "$@" answer < /dev/tty || answer=""; fi
+  if has_tty; then IFS= read -r "$@" answer < /dev/tty || answer=""; fi
   printf '%s' "$answer"
 }
 open_url() { command -v open >/dev/null 2>&1 && open "$1" >/dev/null 2>&1 || true; }
@@ -64,7 +65,7 @@ if [ -z "$CLAUDE" ]; then
 fi
 if "$CLAUDE" auth status --json 2>/dev/null | grep -q '"loggedIn": *true'; then
   info "로그인되어 있어요."
-elif [ -r /dev/tty ]; then
+elif has_tty; then
   info "브라우저가 열리면 Claude 계정(Pro/Max 구독)으로 로그인해 주세요."
   "$CLAUDE" auth login --claudeai < /dev/tty || info "로그인을 건너뛰었어요. 나중에 터미널에서 'claude auth login'을 실행하세요."
 else
@@ -112,4 +113,4 @@ if [ "${TRAVEL_AI_NO_LAUNCH:-0}" = "1" ]; then
   info "설치만 하고 끝냈어요."
   exit 0
 fi
-if [ -r /dev/tty ]; then exec bash start.command < /dev/tty; else exec bash start.command; fi
+if has_tty; then exec bash start.command < /dev/tty; else exec bash start.command; fi
