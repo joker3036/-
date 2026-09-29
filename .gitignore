@@ -34,3 +34,9 @@ yarn-error.log*
 .tmp/
 temp/
 *.tmp
+
+# 여행 유튜브 도구 (travel-ai)
+travel-ai/data/
+travel-ai/.venv/
+__pycache__/
+.pytest_cache/

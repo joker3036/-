@@ -1,0 +1,8 @@
+streamlit>=1.46
+pandas>=2.2
+altair>=5.4
+requests>=2.32
+python-dotenv>=1.0
+youtube-transcript-api>=1.2,<2
+scrapetube==2.6.0
+pytest>=8
