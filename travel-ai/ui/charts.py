@@ -100,7 +100,8 @@ def subscriber_trend(history: pd.DataFrame, threshold: int = 10_000) -> alt.Char
     label = alt.Chart(pd.DataFrame({"y": [threshold], "t": ["구독 1만"]})).mark_text(
         align="left", dx=4, dy=-6, color=c["text2"], fontSize=11).encode(y="y:Q", text="t:N", x=alt.value(0))
     layers = [line]
-    if data["subscribers"].max() >= threshold * 0.7:
+    # 1만 기준선은 구독자가 그 근처일 때만 그린다 (대형 채널에 그리면 축이 0까지 늘어나 추이가 납작해짐)
+    if data["subscribers"].max() >= threshold * 0.7 and data["subscribers"].min() <= threshold * 1.3:
         layers += [rule, label]
     return alt.layer(*layers).properties(height=220)
 
